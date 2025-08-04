@@ -1,0 +1,45 @@
+x-common-env: &common-env
+  EUREKA_CLIENT_DEFAULT_ZONE: ${EUREKA_SERVER_URL:-http://discovery-server:8761/eureka/}
+
+x-fast-healthcheck: &fast-healthcheck
+  interval: 10s
+  timeout: 3s
+  retries: 3
+  start_period: 10s
+
+services:
+
+  api-gateway:
+    image: yusufemrebilgin/api-gateway
+    container_name: api-gateway
+    ports:
+      - "8072:8072"
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -q -O- localhost:8072/actuator/health | grep UP || exit 1" ]
+      <<: *fast-healthcheck
+
+  config-server:
+    image: yusufemrebilgin/config-server
+    container_name: config-server
+    ports:
+      - "8071:8071"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -q -O- localhost:8071/actuator/health | grep UP || exit 1" ]
+      <<: *fast-healthcheck
+
+  discovery-server:
+    image: yusufemrebilgin/discovery-server
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: discovery-server
+      EUREKA_CLIENT_DEFAULT_ZONE: http://discovery-server:8761/eureka/
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -q -O- localhost:8761/actuator/health | grep UP || exit 1" ]
+      <<: *fast-healthcheck
