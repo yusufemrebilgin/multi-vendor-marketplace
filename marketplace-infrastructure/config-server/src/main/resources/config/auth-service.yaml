@@ -1,0 +1,48 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_DEFAULT_ZONE:http://localhost:8761/eureka/}
+    fetch-registry: true
+    register-with-eureka: true
+
+logging:
+  level:
+    root: warn
+    com.yusufemrebilgin.marketplace: info
+    org.springframework: warn
+
+
+# Properties for Keycloak REST Client
+keycloak:
+  url: ${KEYCLOAK_URL:http://localhost:7080}
+  realm: ${KEYCLOAK_REALM:marketplace}
+  client-id: ${KEYCLOAK_CLIENT_ID:marketplace-client}
+  client-secret: ${KEYCLOAK_CLIENT_SECRET:marketplace-client-secret}
+  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:marketplace-admin-client}
+  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:marketplace-admin-client-secret}
+  service-client-id: ${KEYCLOAK_SERVICE_CLIENT_ID:marketplace-service-client}
+  service-client-secret: ${KEYCLOAK_SERVICE_CLIENT_SECRET:marketplace-service-client-secret}
