@@ -1,0 +1,83 @@
+{
+  "realm": "marketplace",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "customer",
+        "description": "Default role for marketplace app"
+      },
+      {
+        "name": "admin",
+        "description": "Admin role for marketplace app"
+      },
+      {
+        "name": "service",
+        "description": "Service client role"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "enabled": true,
+      "protocol": "openid-connect",
+      "clientId": "marketplace-client",
+      "secret": "marketplace-client-secret",
+      "bearerOnly": false,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "serviceAccountsEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "attributes": {
+        "access.token.lifespan": "300",
+        "refresh.token.lifespan": "1800"
+      }
+    },
+    {
+      "enabled": true,
+      "protocol": "openid-connect",
+      "clientId": "marketplace-service-client",
+      "secret": "marketplace-service-client-secret",
+      "bearerOnly": false,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "serviceAccountsEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "access.token.lifespan": "300"
+      },
+      "defaultRoles": ["service"]
+    },
+    {
+      "enabled": true,
+      "protocol": "openid-connect",
+      "clientId": "marketplace-admin-client",
+      "secret": "marketplace-admin-client-secret",
+      "bearerOnly": false,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "serviceAccountsEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "access.token.lifespan": "300",
+        "refresh.token.lifespan": "1800"
+      }
+    }
+  ],
+  "users": [
+    {
+      "serviceAccountClientId": "marketplace-admin-client",
+      "username": "service-account-marketplace-admin-client",
+      "enabled": true,
+      "emailVerified": false,
+      "realmRoles": [
+        "default-roles-marketplace"
+      ],
+      "clientRoles": {
+        "realm-management": [
+          "realm-admin"
+        ]
+      }
+    }
+  ]
+}

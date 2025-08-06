@@ -1,13 +1,26 @@
 x-common-env: &common-env
+  CONFIG_SERVER_URL: ${CONFIG_SERVER_URL:-http://config-server:8071/}
   EUREKA_CLIENT_DEFAULT_ZONE: ${EUREKA_SERVER_URL:-http://discovery-server:8761/eureka/}
 
 x-fast-healthcheck: &fast-healthcheck
-  interval: 10s
+  interval: 15s
   timeout: 3s
   retries: 3
   start_period: 10s
 
 services:
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: keycloak
+    ports:
+      - "7080:8080"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_USERNAME}
+    volumes:
+      - ./marketplace-configs/keycloak/marketplace-realm.json:/opt/keycloak/data/import/realm-config.json
+    command: [ "start-dev", "--import-realm" ]
 
   api-gateway:
     image: yusufemrebilgin/api-gateway
@@ -43,3 +56,24 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "wget -q -O- localhost:8761/actuator/health | grep UP || exit 1" ]
       <<: *fast-healthcheck
+
+  auth-service:
+    image: yusufemrebilgin/auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      KEYCLOAK_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
+      KEYCLOAK_ADMIN_CLIENT_ID: ${KEYCLOAK_ADMIN_CLIENT_ID}
+      KEYCLOAK_ADMIN_CLIENT_SECRET: ${KEYCLOAK_ADMIN_CLIENT_SECRET}
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -q -O- localhost:8081/actuator/health | grep UP || exit 1" ]
