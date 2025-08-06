@@ -1,0 +1,15 @@
+# Profile: development (dev)
+# Config for local development and testing
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Expose all actuator endpoints in dev for easy debugging
+        include: "*"
+
+logging:
+  level:
+    root: info
+    com.yusufemrebilgin.marketplace: debug
+    org.springframework: info
