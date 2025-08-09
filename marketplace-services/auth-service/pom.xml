@@ -16,6 +16,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.yusufemrebilgin.marketplace</groupId>
+            <artifactId>marketplace-common-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yusufemrebilgin.marketplace</groupId>
+            <artifactId>marketplace-common-application</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yusufemrebilgin.marketplace</groupId>
+            <artifactId>marketplace-common-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -39,11 +54,6 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

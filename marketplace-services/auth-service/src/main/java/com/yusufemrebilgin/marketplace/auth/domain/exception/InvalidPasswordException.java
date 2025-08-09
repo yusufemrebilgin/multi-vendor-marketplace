@@ -1,6 +1,8 @@
 package com.yusufemrebilgin.marketplace.auth.domain.exception;
 
-public class InvalidPasswordException extends RuntimeException {
+import com.yusufemrebilgin.marketplace.common.domain.exception.DomainValidationException;
+
+public class InvalidPasswordException extends DomainValidationException {
     public InvalidPasswordException(String message) {
         super(message);
     }

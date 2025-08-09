@@ -1,11 +1,12 @@
-package com.yusufemrebilgin.marketplace.auth.domain.model;
+package com.yusufemrebilgin.marketplace.common.domain.model;
 
-import com.yusufemrebilgin.marketplace.auth.domain.exception.InvalidEmailException;
+import com.yusufemrebilgin.marketplace.common.domain.exception.InvalidEmailException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EmailTest {
 
@@ -36,8 +37,8 @@ class EmailTest {
         @Test
         @DisplayName("Should throw exception for null input")
         void shouldThrowExceptionForNull() {
-            IllegalArgumentException exception = assertThrows(
-                    IllegalArgumentException.class,
+            InvalidEmailException exception = assertThrows(
+                    InvalidEmailException.class,
                     () -> new Email(null)
             );
             assertEquals("Email cannot be null or empty", exception.getMessage());
@@ -46,8 +47,8 @@ class EmailTest {
         @Test
         @DisplayName("Should throw exception for empty input")
         void shouldThrowExceptionForEmpty() {
-            IllegalArgumentException exception = assertThrows(
-                    IllegalArgumentException.class,
+            InvalidEmailException exception = assertThrows(
+                    InvalidEmailException.class,
                     () -> new Email("")
             );
             assertEquals("Email cannot be null or empty", exception.getMessage());

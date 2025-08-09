@@ -4,11 +4,11 @@ import com.yusufemrebilgin.marketplace.auth.application.port.in.LoginCommand;
 import com.yusufemrebilgin.marketplace.auth.application.port.in.RegisterCommand;
 import com.yusufemrebilgin.marketplace.auth.application.port.out.KeycloakClient;
 import com.yusufemrebilgin.marketplace.auth.application.port.out.UserEventPublisher;
-import com.yusufemrebilgin.marketplace.auth.domain.model.Email;
-import com.yusufemrebilgin.marketplace.auth.domain.model.IdentityNumber;
 import com.yusufemrebilgin.marketplace.auth.domain.model.Password;
 import com.yusufemrebilgin.marketplace.auth.domain.model.TokenPair;
 import com.yusufemrebilgin.marketplace.auth.domain.model.Username;
+import com.yusufemrebilgin.marketplace.common.domain.model.Email;
+import com.yusufemrebilgin.marketplace.common.domain.model.IdentityNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,7 +81,7 @@ class AuthServiceTest {
         // then
         verify(keycloakClient).register(any());
         verify(userEventPublisher).publish(argThat(event ->
-                event.userId().equals(generatedUserId) &&
+                event.id().equals(generatedUserId) &&
                         event.firstName().equals("Test") &&
                         event.lastName().equals("User") &&
                         event.email().equals("testuser@example.com") &&

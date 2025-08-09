@@ -8,9 +8,9 @@ import com.yusufemrebilgin.marketplace.auth.application.port.out.KeycloakClient;
 import com.yusufemrebilgin.marketplace.auth.application.port.out.KeycloakRegisterCommand;
 import com.yusufemrebilgin.marketplace.auth.application.port.out.UserCreatedEvent;
 import com.yusufemrebilgin.marketplace.auth.application.port.out.UserEventPublisher;
-import com.yusufemrebilgin.marketplace.auth.application.annotation.UseCase;
 import com.yusufemrebilgin.marketplace.auth.domain.model.Role;
 import com.yusufemrebilgin.marketplace.auth.domain.model.TokenPair;
+import com.yusufemrebilgin.marketplace.common.application.UseCase;
 import lombok.RequiredArgsConstructor;
 
 @UseCase
