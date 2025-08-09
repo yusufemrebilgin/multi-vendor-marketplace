@@ -1,7 +1,7 @@
 package com.yusufemrebilgin.marketplace.auth.application.port.out;
 
 public record UserCreatedEvent(
-        String userId,
+        String id,
         String firstName,
         String lastName,
         String email,

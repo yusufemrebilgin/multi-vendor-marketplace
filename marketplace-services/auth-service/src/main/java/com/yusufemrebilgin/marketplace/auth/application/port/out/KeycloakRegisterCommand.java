@@ -1,10 +1,10 @@
 package com.yusufemrebilgin.marketplace.auth.application.port.out;
 
 import com.yusufemrebilgin.marketplace.auth.application.port.in.RegisterCommand;
-import com.yusufemrebilgin.marketplace.auth.domain.model.Email;
 import com.yusufemrebilgin.marketplace.auth.domain.model.Password;
 import com.yusufemrebilgin.marketplace.auth.domain.model.Role;
 import com.yusufemrebilgin.marketplace.auth.domain.model.Username;
+import com.yusufemrebilgin.marketplace.common.domain.model.Email;
 
 public record KeycloakRegisterCommand(
         String firstName,
